@@ -21,28 +21,41 @@
 <body>
 
 <h2 id="title">IBAN Verify</h2>
-<input type="text" id="kimlik"> 
-<button onClick="increment()">  +97  </button>
+<p> <input type="text" id="kimlik"> 
+<button onClick="incrementAndVerify()">Click for +97</button></p>
 <p id="out"></p>
 
 <hr>
-<b>Sample code</b>
-<pre id="sample">function verifyIBAN(s) {<br>    const ASCII_0 = 48, ASCII_A = 65;<br>    if (typeof s != 'string') s = String(s)<br>    const E = /[A-Z]{2}[0-9]{2}[A-Z0-9]+/<br>    if (!s.match(E)) return false;<br>    var acc = 0;<br>    function add(n) {<br>        if (n == 32) return<br>        // if (acc &gt; 1000000) acc %= 97;<br>        acc = n &lt; ASCII_A ? 10 * acc + n - ASCII_0 <br>            : 100 * acc + n - ASCII_A + 10;<br>        acc %= 97;<br>    }<br>    s = s.substring(4)+s.substring(0,4)<br>    for (let i=0; i&lt;s.length; ++i) <br>        add(s.charCodeAt(i));<br>    return acc == 1;<br>}<br>function report() {<br>    let v = kimlik.value.replaceAll(/\s/g, '')<br>    let t = ''<br>    if (v.length === 11) {<br>        t = verifyTC(v)<br>        if (t === true) t = 'TC ✓'<br>    } else {<br>        t = verifyIBAN(v)? 'IBAN ✓' : 'hatalı'<br>    }<br>    out.innerText += '\n'+v+' '+t<br>    console.log(v, t)<br>}</pre>
-<hr>
-
 
 <!-- <script src="../util/Util.js"></script> -->
 <script>
 "use strict";
-function increment() {
-    let v = kimlik.value.replaceAll(/\s/g, '')
-    
-    let value = parseInt(v,10)
-
-    let c = value+97
-    console.log("counter = "+c)
-    out.innerText = c
-    kimlik.value = c
+function incrementAndVerify() {
+    let iban = kimlik.value.replaceAll(/\s/g, '')
+    if (verifyIBAN(iban)) {
+        iban = iban.replace('TR','')
+        let increment = "97"
+        let carry = 0
+        let sum = ""
+        let different = increment.length - iban.length 
+        for (let i = iban.length - 1; i >= 0; i--){
+            let temp = (Number(iban.charAt(i)) % 10) +
+			(Number(increment.charAt(i + different)) % 10) +
+			carry;
+            if (temp >= 10) {
+			sum = (temp % 10) + sum;
+			carry = Math.floor(temp / 10);
+		    } else {
+			sum = temp + sum;
+			carry = 0;
+		    }
+        }
+        if (carry) {
+		sum = carry + sum;
+	    }
+        document.getElementById("kimlik").value = "TR" + sum;
+    }
+    report()
 }
 
 function verifyIBAN(s) {
@@ -97,9 +110,8 @@ function report() {
     console.log(v, t)
 }
     title.innerText = document.title
-    sample.innerText = verifyIBAN+'\n'+report
     kimlik.onchange = report
-    kimlik.value = '212 212 212 72'
+    kimlik.value = 'TR30 0020 5000 0938 5849 1000 01'
     report()
 </script>
 
