@@ -3,22 +3,95 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home Page</title>
+    <link rel="icon" sizes="206x195" href="images/ek_logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 <style>
     body {
         font-family: url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,300&display=swap");
         line-height: 1.75rem;
     }
+
+    a {
+        font-family: "Montserrat", sans-serif;
+        font-style: italic;
+        text-decoration: none;
+        color: #03506f;
+        letter-spacing: 0.5px;
+
+    }
+
+    a:hover {
+
+        color: #d8631f;
+
+    }
+
+    h2 {
+        font-family: "Montserrat", sans-serif;
+        font-style: italic;
+        color: #d8631f;
+    }
+
+    .box{
+        background: #eeeeee;
+        font-family: "Montserrat", sans-serif;
+        font-style: italic;
+        margin-top: 10px;
+        border: 2px solid gray;
+        border-radius: 5px;
+        margin-left: 10px;
+        padding-left: 10px;
+        margin-right: 10px;
+    }
+
+    .authors{
+        background: #eeeeee;
+        font-family: "Montserrat", sans-serif;
+        font-style: italic;
+        margin-top: 10px;
+        border: 1px solid gray;
+        border-radius: 5px;
+        margin-left: 10px;
+        padding-left: 10px;
+        margin-right: 10px;
+        color: #03506f;
+    }
+
+   
+
+    .work {
+        background: #eeeeee;
+        margin-left: 10px;
+        padding-left: 10px;
+        margin-bottom: 5px;
+        margin-top: 10px;
+        border: 1px solid gray;
+        border-radius: 5px;
+        margin-right: 10px;
+
+    }
+
 </style>
 
 <body>
     <div class="box">
         <a href="https://github.com/erdinckuvvet/advanced-programming-2022"><i
             style="margin-left: 10px; margin-bottom: 10px; font-size: 1.5rem; margin-top:10px ;"
-            class="github"></i> Repository</a>
-            <div class="authors"> Erdinç Kuvvet </div>
-        
-        <div class="cw">
+            class="fab fa-github"></i> Repository</a>
+            <div class="authors"> <a
+                href="https://github.com/erdinckuvvet">Student: Erdinç Kuvvet </a></div>
+        <div class = "work">
+            <h2>Projects</h2>
+            <ul type = "none">
+                <li>
+                    <a><i
+                        class="link"></i> Project #1 - loading</a>
+                </li>
+            </ul>
+
+        </div>   
+        <div class="work">
             <h2>Class Works</h2>
             <ul type = "none">
                 <li><a
@@ -40,12 +113,12 @@
 
             </ul>
         </div>
-        <div class = "hw">
+        <div class = "work">
             <h2>Homeworks</h2>
             <ul type = "none">
                 <li>
                     <a href="https://erdinckuvvet.github.io/advanced-programming-2022/HW1/chap4.html"><i
-                        class="fas fa-link"></i> HW#1 - Array Methods</a>
+                        class="link"></i> HW#1 - Array Methods</a>
                 </li>
             </ul>
 
