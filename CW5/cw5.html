@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width">
+   
+    <title>CW#5 -- Event listeners</title>
+
+  <style> 
+    body { max-width: 440px; }
+	#online { color: rgb(26, 9, 213); }
+  
+  </style>
+</head>
+
+<body>
+
+<h2> Battery Status </h2>
+<div id="charge">Charging...</div>
+<progress id="bar" max="100" value="50"></progress>
+<span id="percent">99%</span>
+
+<h2>Online Status</h2>
+<p id="online">connected -- online</p>
+
+<h2>Keyboard</h2>
+<span id="modifier"></span><span id="key">s</span>
+
+<br><br>
+
+<b>Sample code</b>
+<pre id="sample">function init() {<br>    navigator.getBattery().then(b =&gt; {<br>      let levelChange = () =&gt; {<br>        percent.innerText = 100*b.level+'%';<br>        bar.value = 100*b.level;<br>      }<br>      levelChange();<br>      b.onlevelchange = levelChange;<br>      <br>      let chargeChange = () =&gt; {<br>        charge.innerText = (b.charging) ?<br>         "Charging..." : "Discharging...";<br>      }<br>      chargeChange();<br>      b.onchargingchange = chargeChange;  })<br>    <br>    online.innerText = (window.navigator.onLine)?<br>    "connected -- online" : "disconnected -- offline";<br>    window.addEventListener("online", () =&gt; {<br>      online.innerText = "connected -- online"; });<br>    window.addEventListener("offline", () =&gt; {<br>      online.innerText = "disconnected -- offline"; });<br>    <br>    window.onkeydown = (evt) =&gt; {   <br>      key.innerText = evt.key;<br>    };<br>    window.onkeyup = (evt) =&gt; {    <br>    };<br>}</pre>
+<hr>
+
+<script>
+"use strict";
+function init() {
+    navigator.getBattery().then(b => {
+      let levelChange = () => {
+        percent.innerText = 100 * b.level+'%';
+        bar.value = 100 * b.level;
+      }
+      levelChange();
+      b.onlevelchange = levelChange;
+      
+      let chargeChange = () => {
+        charge.innerText = (b.charging) ?
+         "Charging..." : "Discharging...";
+      }
+      chargeChange();
+      b.onchargingchange = chargeChange;  })
+    
+    online.innerText = (window.navigator.onLine)?
+    "connected -- online" : "disconnected -- offline";
+    window.addEventListener("online", () => {
+      online.innerText = "connected -- online"; });
+    window.addEventListener("offline", () => {
+      onoffline.innerText = "disconnected -- offline"; });
+    
+    window.onkeydown = (evt) => {   
+      key.innerText = evt.key;
+    };
+    window.onkeyup = (evt) => {    
+    };
+}
+    sample.innerText = init;
+    init();
+</script>
+
+
+
+</body></html>
