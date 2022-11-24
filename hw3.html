@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width">
+    <title>HW#3 - Fetch & Animations</title>
+
+  <style> 
+    body { max-width: 440px; }
+
+    #canvas {
+    width: 400px;
+    height: 300px;
+    background: white;
+}
+  </style>
+</head>
+
+<body>   
+
+<h2>HW#3 - Fetch & Animations</h2>
+<canvas id="canvas"></canvas>
+<button class="button" id= "start">start</button>
+<button disabled class="button" id= "pause">pause</button>
+<button disabled class="button" id= "stop">stop</button>
+<button disabled class="button" id= "next">next</button>
+<button disabled class="button" id= "prev">prev</button>
+<hr>
+<b>Sample code</b>
+<pre id="sample">function init() {<br> sample</pre>
+<hr>
+</body>
+<script>
+"use strict";
+
+let images = [];
+let buttons = new Map();
+buttons.set('start', document.querySelector("#start"));
+buttons.set('pause', document.querySelector("#pause"));
+buttons.set('stop', document.querySelector("#stop"));
+buttons.set('next', document.querySelector("#next"));
+buttons.set('prev', document.querySelector("#prev"));
+
+
+let canvas = document.querySelector("#canvas");
+let context = canvas.getContext("2d");
+let imageIndex = 0;
+let prevTime = 0;
+let isActive = false;
+let rate = 200;
+
+window.addEventListener("load", () => {
+    buttonListener();
+    getImages();
+    playAnimation();
+});
+
+function buttonListener() {
+    buttons.forEach((x) => {
+        x.addEventListener("click", (event) => {
+            switch (event.target.id) {
+                case "start":
+                    if (!isActive) {
+                        isActive = true;
+                        playAnimation();
+                    }
+                    buttons.get('start').disabled = true;
+                    buttons.get('pause').disabled = false;
+                    buttons.get('stop').disabled = false;
+                    buttons.get('next').disabled = true;
+                    buttons.get('prev').disabled = true;
+                    break;
+                case "pause":
+                    isActive = false;
+                    buttons.get('start').disabled = false;
+                    buttons.get('pause').disabled = true;
+                    buttons.get('stop').disabled = true;
+                    buttons.get('next').disabled = false;
+                    buttons.get('prev').disabled = false;
+                    break;
+                case "stop":
+                    isActive = false;
+                    imageIndex = 0;
+                    window.cancelAnimationFrame(playAnimation);
+                    clear();
+                    buttons.get('start').disabled = false;
+                    buttons.get('pause').disabled = true;
+                    buttons.get('stop').disabled = true;
+                    buttons.get('next').disabled = true;
+                    buttons.get('prev').disabled = true;
+                    break;
+                case "next":
+                    imageIndex = imageIndex >= images.length - 1 ? 0 : imageIndex + 1;
+                    draw(images[imageIndex]);
+                    break;
+                case "prev":
+                    imageIndex = imageIndex <= 0 ? images.length - 1 : imageIndex - 1;
+                    draw(images[imageIndex]);
+                    break;
+                default:
+                    console.log("error");
+                    break;
+            }
+        });
+    });
+}
+
+function playAnimation() {
+    let thisTime = new Date().getTime() - prevTime;
+    if (!isActive) {
+        return;
+    }
+    if (thisTime > rate) {
+        imageIndex = imageIndex >= images.length - 1 ? 0 : imageIndex + 1;
+        prevTime = new Date().getTime();
+    }
+    draw(images[imageIndex]);
+    requestAnimationFrame(playAnimation);
+}
+
+function draw(image) {
+    context.clearRect(0, 0, 300, 300);
+    context.drawImage(image, 0,0);
+}
+
+function clear() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+async function getImages() {
+    for (let i = 1; i <= 10; i++) {
+        let url = "animation/pic"+i+".png";
+
+        let options = {
+            method: "GET",
+        };
+
+        let response = await fetch(url, options);
+
+        if (response.status === 200) {
+            let imageBlob = await response.blob();
+            let imageObjectURL = URL.createObjectURL(imageBlob);
+
+            let image = document.createElement("img");
+            image.src = imageObjectURL;
+
+            images.push(image);
+        } else {
+            console.log("HTTP-Error: " + response.status);
+        }
+    }
+}
+
+sample.innerText = getImages +"\n"+ playAnimation;  
+
+</script>
+
+
+
+</html>
