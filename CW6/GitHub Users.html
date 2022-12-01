@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="\images\ek_logo.png">
+    <title>GitHub Users</title>
+  <style>
+    body {
+        max-width: 440px;
+        padding-left: 10px;
+        border: 1px;
+        border-radius: 20;
+        font-family: sans-serif;
+    }
+    img {
+        padding-right: 177px; 
+        padding-bottom: 25px;
+        width: 256px;
+        float: left;
+    }
+    pre { overflow-x: auto; }
+    #out { color: black; 
+    padding-left: 10px;
+    }
+    #err { color: red; }
+    
+    #repoName{
+      margin-top: 15px;
+      font-weight: 600;
+      font-size: large;
+    }
+    #repoLogin{
+      color: grey;
+    }
+    .a{
+      padding-bottom: 10px;
+    }
+    #lim {
+        position: absolute;
+        top: 40px; right: 5px;
+        font-family: Verdana, Geneva, sans-serif;
+        font-size: smaller;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2 id="title">GitHub Users</h2>
+<input type="search" id="usr" value="erdinckuvvet" onchange="readUser()">
+<p id="out" hidden="">
+  <img id="avatar" alt="Avatar for the selected user" src="./GitHub Users_files/91333047">
+  <br><span id="repoName">BLM305</span><br>
+  <span id="repoLogin">github</span><br><br>
+  <a id="company" target="NewTab" >asd</a><br>
+  <a id="location" target="NewTab" >İstanbul</a><br>
+  <a id="repoLink" target="NewTab" href="https://github.com/BLM305">github.com/BLM305</a><br>
+  <a id="ioLink" target="NewTab" href="https://github.com/BLM305">github.com/BLM305</a><br>
+  
+  
+</p>
+
+<p id="err">Rate limit exceeded</p>
+<div id="lim" title="Rate used / Rate limit">60/60</div>
+
+<hr>
+<b>Sample code</b>
+<pre id="sample">async function toJSON(url) {<br>  try {<br>    let r = await fetch(url)<br>    if (!r.ok) exception(r.status)<br>    return r.json()<br>  } catch (e) {<br>    error(e)<br>  }<br>}<br>async function readUser() {<br>    const URL = "https://api.github.com/users/"<br>    let u = await toJSON(URL+usr.value)<br>    if (!u || !u.login) return<br>    out.hidden = 0; err.hidden = 1<br>    //start with the avatar<br>    avatar.src = u.avatar_url<br>    //name and location<br>    let s = (u.name || u.login)<br>    if (u.location) s += ', '+u.location<br>    repoName.innerText = s; console.log(s)<br>    //link to GitHub <br>    let h = "github.com/"+u.login<br>    repoLink.href = "https://"+h<br>    repoLink.innerText = h<br>    //repo count and repo names<br>    let n = u.public_repos<br>    repoCount.innerText = n<br>    let b = n&gt;0? await toJSON(URL+u.login+"/repos") : []<br>    repoList.innerText = b.map(x =&gt; x.name).join(", ")<br>    showRateLimit()<br>}</pre>
+<hr>
+
+
+<script>
+"use strict";
+function error(e) {
+    err.innerText = e; console.error(e)
+    out.hidden = 1; err.hidden = 0
+    showRateLimit()
+}
+function exception(s) {
+  switch (s) {
+    case 403:
+      throw 'Rate limit exceeded'
+    case 404:
+      throw usr.value+' not found'
+    default:
+      throw 'Status '+s
+  }
+}
+async function toJSON(url) {
+  try {
+    let r = await fetch(url)
+    if (!r.ok) exception(r.status)
+    return r.json()
+  } catch (e) {
+    error(e)
+  }
+}
+async function readUser() {
+    const URL = "https://api.github.com/users/"
+    let u = await toJSON(URL+usr.value)
+    if (!u || !u.login) return
+    console.log(u)
+    out.hidden = 0; err.hidden = 1
+    //start with the avatar
+    avatar.src = u.avatar_url
+    //name and login name
+    let s = (u.name)
+    let loginName = u.login
+    repoName.innerText = s; console.log(s)
+    repoLogin.innerText = loginName;
+     //company name
+    let c;
+    if (u.company) c = u.company;
+    company.innerText = c
+    //location
+    let loc;
+    if (u.location) loc = u.location;
+    location.innerText = loc;
+    //link to GitHub 
+    let h = "github.com/"+u.login
+    repoLink.href = "https://"+h
+    repoLink.innerText = h
+    //link to home page of repository
+    let io = u.blog
+    ioLink.href = "https://"+io
+    ioLink.innerText = io
+    
+    showRateLimit()
+}
+async function showRateLimit() {
+    const LIM="https://api.github.com/rate_limit"
+    let {rate} = await toJSON(LIM)
+    lim.innerText = rate.used+'/'+rate.limit
+}
+    title.innerText = document.title
+    sample.innerText = toJSON +'\n'+ readUser
+    readUser()
+</script>
+
+
+
+
+
+
+</body></html>
