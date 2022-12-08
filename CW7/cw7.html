@@ -126,7 +126,7 @@ var accessKey;
 async function askWeather() {
     console.log(lat, lon); 
     let u = "https://api.openweathermap.org/data/2.5/weather?"
-             +"lat="+lat+"&lon="+lon+"&APPID="+accessKey;
+             +"lat="+lat+"&lon="+lon+"&APPID="+"0e7cc21ab6fef5d17bfc8e6fee6fd953";
     
     detay.innerText = ''
     gunes.innerText = ''
@@ -192,7 +192,7 @@ function getAPIkey() {
         if (!localStorage.keys) localStorage.keys = '{}'
         let keys = JSON.parse(localStorage.keys)
         if (!keys.openweather) {
-           keys.openweather = askUser()
+           keys.openweather = "0e7cc21ab6fef5d17bfc8e6fee6fd953"
            localStorage.keys = JSON.stringify(keys)
         }
         accessKey = keys.openweather
