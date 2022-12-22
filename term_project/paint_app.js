@@ -75,9 +75,15 @@ eraser.addEventListener("click", () => {
 });
 
 pen.addEventListener("click", () => {
+
     eraser.style.border = "1px solid black"
     pen.style.border = "2px solid tomato"
     fill.style.border = "1px solid black"
+
+    console.log(color);
+    if (color == "white") {
+        color = "black";
+    }
 
     eraserMode = false;
     
