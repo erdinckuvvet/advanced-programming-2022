@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Paint App</title>
+</head>
+
+<style> 
+    body {
+        background-color: bisque; 
+        align-items: center;
+    }
+
+    h1 {
+         text-align: center;
+    }
+
+    button {
+        background-color: rgb(241, 129, 64);
+        border-radius: 10px;
+        border: 1px solid black;
+    }
+
+    canvas{
+        border: 2px solid black;
+		width: 100%;
+		height: 100%;
+
+    }
+
+    #buttons {
+        padding-top: 5px;
+        padding-bottom: 10px;
+        width: 100%;
+		height: 100%;
+		
+    }
+
+    #buttons a {
+        color: black; 
+        padding: 5px; 
+        
+    }
+  
+
+</style>
+
+<body>  
+    <h1>Paint App</h1> 
+    <div class="shell">
+        <div id="buttons">
+            <a><button id="pen"><img src="images/pen_icon.png" height="30" width="30"></button></a>
+            <a><button id ="eraser"><img src="images/eraser_icon.png" height="30" width="30"></button></a>
+            <a><button id ="fill"><img src="images/fill_icon.png" height="30" width="30"></button></a>
+            <input id="color-picker" type="color" />
+            <input id="size-picker" type="range" value="5" min="0" max="15" />
+        </div>
+
+        
+     <canvas id="canvas" width="600" height="700"></canvas>
+        
+    </div>
+    
+    <script src ="paint_app.js"></script>
+    
+</body>
+
+</html>
