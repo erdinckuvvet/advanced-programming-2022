@@ -35,6 +35,17 @@ canvas.addEventListener("mousemove", (e) => {
   }
 });
 
+canvas.addEventListener("touchmove", (e) => {
+    e.preventDefault();
+    var rect = e.target.getBoundingClientRect();
+    var x = e.touches[0].clientX - rect.left;
+    var y = e.touches[0].clientY - rect.top;
+  
+    if (e.touches.length > 0) {
+      draw(x, y);
+    }
+  });
+
 canvas.addEventListener("mousedown", (e) => {
       var rect = e.target.getBoundingClientRect();
       var x = e.clientX - rect.left; //x position within the element.
