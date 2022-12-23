@@ -1,5 +1,6 @@
 {
     "name": "PaintApp",
+    "id": "/term_project/paint_app.html",
     "start_url": "/term_project/paint_app.html",
     "display": "standalone",
     "background_color": "bisque",
