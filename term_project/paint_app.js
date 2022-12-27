@@ -1,7 +1,7 @@
 const canvas = document.querySelector("#canvas");
 const eraser = document.querySelector("#eraser");
 const pen = document.querySelector("#pen");
-const fill = document.querySelector("#fill");
+const clear = document.querySelector("#clear");
 const color_picker = document.querySelector("#color-picker");
 const size_picker = document.querySelector("#size-picker");
 
@@ -64,7 +64,7 @@ function draw(x, y) {
 eraser.addEventListener("click", () => {
   eraser.style.border = "2px solid tomato"
   pen.style.border = "1px solid black"
-  fill.style.border = "1px solid black"
+  clear.style.border = "1px solid black"
 
 
   eraserMode = !eraserMode;
@@ -78,7 +78,7 @@ pen.addEventListener("click", () => {
 
     eraser.style.border = "1px solid black"
     pen.style.border = "2px solid tomato"
-    fill.style.border = "1px solid black"
+    clear.style.border = "1px solid black"
 
     console.log(color);
     if (color == "white") {
@@ -90,10 +90,10 @@ pen.addEventListener("click", () => {
     
   });
 
-fill.addEventListener("click", () => {
+clear.addEventListener("click", () => {
     eraser.style.border = "1px solid black"
     pen.style.border = "1px solid black"
-    fill.style.border = "2px solid tomato"
+    clear.style.border = "2px solid tomato"
 
     context.fillStyle = "white";
     context.fillRect(0,0,canvas.width, canvas.height);
