@@ -2,7 +2,7 @@
   "name": "Paint App",
   "short_name": "Paint",
   "id": "paintapp",
-  "start_url": "/term_project/paint_app.html",
+  "start_url": "paint_app.html",
   "display": "standalone",
   "theme_color": "#ffffff",
   "background_color": "bisque",
