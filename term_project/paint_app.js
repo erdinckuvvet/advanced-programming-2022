@@ -80,7 +80,6 @@ pen.addEventListener("click", () => {
     pen.style.border = "2px solid tomato"
     clear.style.border = "1px solid black"
 
-    console.log(color);
     if (color == "white") {
         color = "black";
     }
